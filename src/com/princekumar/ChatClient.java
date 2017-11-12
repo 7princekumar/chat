@@ -43,6 +43,7 @@ public class ChatClient {
     void startChat() throws Exception{
 
         //Will return the value which the user will enter into his text field.
+        //Here, to get the ip address, we are using a dialog box
         String ipAddress = JOptionPane.showInputDialog(chatWindow,
                 "Enter Ip Address: ",
                 "IP Address Required!!",
