@@ -66,7 +66,7 @@ public class ChatClient {
             String str = in.readLine();
 
 
-            if(str.equals("NAME_REQUIRED")) //startWith, since we're sending two strings from the server
+            if(str.equals("NAME_REQUIRED"))
             {
                 String name = JOptionPane.showInputDialog(chatWindow,
                         "Enter username: ",
@@ -82,7 +82,7 @@ public class ChatClient {
                         JOptionPane.WARNING_MESSAGE);
                 out.println(name); //again send the new entered name to the server to check whether it's unique or not
             }
-            else if(str.startsWith("NAME_ACCEPTED"))
+            else if(str.startsWith("NAME_ACCEPTED")) //startWith, since we're sending two strings from the server
             {
                 //now, make the textField editable
                 textField.setEditable(true);
