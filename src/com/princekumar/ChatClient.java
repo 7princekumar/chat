@@ -18,6 +18,7 @@ public class ChatClient {
     static JTextField textField2 = new JTextField(40);          //typing area
     static JLabel     blankLabel = new JLabel("          ");
     static JButton    sendButton = new JButton("Send");            //SEND button
+    static JLabel     nameLabel  = new JLabel("          ");
 
     static BufferedReader in;
     static PrintWriter out;
@@ -25,7 +26,7 @@ public class ChatClient {
     public ChatClient() {
         //define how components will be arranged onto the Frame(window)
         chatWindow.setLayout(new FlowLayout());
-
+        chatWindow.add(nameLabel);
 
         //add components in the window
         chatWindow.add(new JScrollPane(chatArea));                 //adds a scroller for the chat area
@@ -65,7 +66,7 @@ public class ChatClient {
             String str = in.readLine();
 
 
-            if(str.equals("NAME_REQUIRED"))
+            if(str.equals("NAME_REQUIRED")) //startWith, since we're sending two strings from the server
             {
                 String name = JOptionPane.showInputDialog(chatWindow,
                         "Enter username: ",
@@ -81,10 +82,11 @@ public class ChatClient {
                         JOptionPane.WARNING_MESSAGE);
                 out.println(name); //again send the new entered name to the server to check whether it's unique or not
             }
-            else if(str.equals("NAME_ACCEPTED"))
+            else if(str.startsWith("NAME_ACCEPTED"))
             {
                 //now, make the textField editable
                 textField.setEditable(true);
+                nameLabel.setText("You're logged in as: "+str.substring(13));
             }
             else{
                 //if the server sends any other text than the above three, it's actullay a msg and display it on the screen

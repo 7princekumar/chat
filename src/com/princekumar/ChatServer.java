@@ -70,7 +70,7 @@ class ConversationHandler extends Thread{
                 count++;
             }
 
-            out.println("NAME_ACCEPTED");
+            out.println("NAME_ACCEPTED"+name);
             ChatServer.printWriters.add(out);
 
             //read msgs from client and send it to all the other clients
