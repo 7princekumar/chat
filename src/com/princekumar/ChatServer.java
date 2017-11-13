@@ -18,7 +18,7 @@ public class ChatServer {
     public static void main(String[] args) throws Exception{
         System.out.println("Server Started.");
         System.out.println("Waiting for clients.");
-        ServerSocket ss = new ServerSocket(9806);
+        ServerSocket ss = new ServerSocket(8080);
 
         while(true){
             Socket soc = ss.accept();
@@ -52,10 +52,12 @@ class ConversationHandler extends Thread{
             //ask the user for a unique name, then add the username and its 'out' to the arraylists created
             int count = 0;
             while(true){
-                if(count > 0)
-                    out.println("NAMEALREADYEXISTS");
-                else
-                    out.println("NAMEREQUIRED");
+                if(count > 0) {
+                    out.println("NAME_ALREADY_EXISTS");
+                }
+                else{
+                    out.println("NAME_REQUIRED");
+                }
 
                 name = in.readLine();
                 if(name == null)
@@ -68,8 +70,20 @@ class ConversationHandler extends Thread{
                 count++;
             }
 
-            out.println("NAMEACCEPTED");
+            out.println("NAME_ACCEPTED");
             ChatServer.printWriters.add(out);
+
+            //read msgs from client and send it to all the other clients
+            while(true){
+                String message = in.readLine();
+                if(message == null){
+                    return;
+                }
+                for(PrintWriter writer : ChatServer.printWriters){
+                    //for eatch PrintWriter obj in printWriters array, do the following
+                    writer.println(name+ ": "+message);
+                }
+            }
         }
         catch(Exception e){
             System.out.println(e);
