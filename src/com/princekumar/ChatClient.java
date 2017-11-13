@@ -15,7 +15,6 @@ public class ChatClient {
     static JFrame     chatWindow = new JFrame("Chat Application"); //window
     static JTextArea  chatArea   = new JTextArea(22,40);  //to display text, that area
     static JTextField textField  = new JTextField(40);          //typing area
-    static JTextField textField2 = new JTextField(40);          //typing area
     static JLabel     blankLabel = new JLabel("          ");
     static JButton    sendButton = new JButton("Send");            //SEND button
     static JLabel     nameLabel  = new JLabel("          ");
@@ -86,6 +85,7 @@ public class ChatClient {
             {
                 //now, make the textField editable
                 textField.setEditable(true);
+                //diplay the username on the nameLabel
                 nameLabel.setText("You're logged in as: "+str.substring(13));
             }
             else{

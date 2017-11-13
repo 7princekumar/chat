@@ -1,10 +1,6 @@
 package com.princekumar;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -17,7 +13,7 @@ public class ChatServer {
 
     public static void main(String[] args) throws Exception{
         System.out.println("Server Started.");
-        System.out.println("Waiting for clients.");
+        System.out.println("Waiting for clients...");
         ServerSocket ss = new ServerSocket(8080);
 
         while(true){
@@ -35,12 +31,23 @@ public class ChatServer {
 //create a new thread class
 class ConversationHandler extends Thread{
     Socket socket;      //socket for we'll be creating this thread
+    //for SERVER
     BufferedReader in;  //to get input from server
     PrintWriter out;    //to send data to server
+
     String name;
+
+    //for FILE
+    PrintWriter pw;     //to send data to the file
+    static FileWriter fw; //write char by char to a file - one byte at a time
+    static BufferedWriter bw; //--no idea--
 
     public ConversationHandler(Socket socket) throws IOException {
         this.socket = socket;
+        fw = new FileWriter("/Users/princekumar/Desktop/ChatServer-Logs.txt",true);
+        //true - so it appends texts at the end and not write from the start
+        bw = new BufferedWriter(fw); //we need string at a time, not byte by byte, so this.
+        pw = new PrintWriter(bw,true);
     }
 
     @Override
@@ -79,8 +86,10 @@ class ConversationHandler extends Thread{
                 if(message == null){
                     return;
                 }
+                pw.println(name+": "+message);
+
                 for(PrintWriter writer : ChatServer.printWriters){
-                    //for eatch PrintWriter obj in printWriters array, do the following
+                    //for each PrintWriter obj in printWriters array, do the following
                     writer.println(name+ ": "+message);
                 }
             }
